@@ -1,5 +1,9 @@
+import React from "react";
+
 function Grid() {
-  return <li></li>;
+  const [note, setNote] = React.useState("");
+
+  return <li>{note}</li>;
 }
 
 export default Grid;

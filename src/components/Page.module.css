@@ -1,6 +1,6 @@
-.paper {
+.page {
   max-width: 750px;
-  height: 95vh;
+  height: 750px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
   margin: 0 auto;
   background-color: white;

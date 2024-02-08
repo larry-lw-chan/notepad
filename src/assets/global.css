@@ -5,7 +5,13 @@
   src: url("/fonts/IndieFlower-Regular.ttf") format("truetype");
 }
 
+:root {
+  --primary-blue: hsl(240, 57%, 65%);
+  --light-blue: hsl(240, 57%, 80%);
+}
+
 body {
   background-color: bisque;
   font-family: "Indie Flower", cursive;
+  padding-top: 1rem;
 }

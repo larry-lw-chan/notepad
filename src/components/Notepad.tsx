@@ -1,15 +1,9 @@
-import styles from "./Notepad.module.css";
-import Header from "./Header";
-import GridList from "./GridList";
+import Page from "./Page";
 
 function Notepad() {
-  return (
-    <div className={styles.paper}>
-      <div className={styles.sidebar}></div>
-      <Header />
-      <GridList />
-    </div>
-  );
+  // Future function - Notepad can contain many pages, each with it's own state data
+  // Add Navigation Bar Above Page
+  return <Page />;
 }
 
 export default Notepad;

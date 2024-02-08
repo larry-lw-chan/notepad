@@ -1,7 +1,7 @@
 import styles from "./GridList.module.css";
 import Grid from "./Grid";
 
-const NUM_OF_GRID = 36;
+const NUM_OF_GRID = 30;
 
 function GridList() {
   const grids = Array.from({ length: NUM_OF_GRID }, () => "");
