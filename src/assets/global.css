@@ -8,10 +8,15 @@
 :root {
   --primary-blue: hsl(240, 57%, 65%);
   --light-blue: hsl(240, 57%, 80%);
+
+  --css-palette-one: #ececec;
+  --css-palette-two: #9fd3c7;
+  --css-palette-three: #385170;
+  --css-palette-four: #142d4c;
 }
 
 body {
-  background-color: bisque;
+  background-color: var(--css-palette-two);
   font-family: "Indie Flower", cursive;
   padding-top: 1rem;
 }

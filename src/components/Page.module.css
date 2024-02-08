@@ -6,11 +6,13 @@
 }
 
 .page {
+  width: 100vw;
   max-width: 750px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
   margin: 0 auto;
   background-color: white;
   position: relative;
+  margin-bottom: 120px;
 }
 
 .bottom {

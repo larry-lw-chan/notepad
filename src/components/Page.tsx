@@ -5,14 +5,14 @@ import GridList from "./GridList";
 
 function Page() {
   return (
-    <div className={styles.page}>
+    <main className={styles.page}>
       <div className={styles.sidebar}></div>
-      <main>
+      <div>
         <Title />
         <GridList />
-      </main>
+      </div>
       <div className={styles.bottom}></div>
-    </div>
+    </main>
   );
 }
 
