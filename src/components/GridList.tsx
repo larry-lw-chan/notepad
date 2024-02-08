@@ -1,3 +1,4 @@
+import React from "react";
 import styles from "./GridList.module.css";
 import Grid from "./Grid";
 
@@ -8,9 +9,9 @@ function GridList() {
 
   return (
     <ul className={styles.gridlist}>
-      {grids.map((_, i) => (
-        <Grid key={i} />
-      ))}
+      {grids.map((_, i) => {
+        return <Grid key={i} />;
+      })}
     </ul>
   );
 }

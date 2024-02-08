@@ -2,8 +2,9 @@ import React from "react";
 import useNoteContext from "../context/NoteContext";
 
 // interface GridProp {
-//   isEditting: boolean;
-//   setIsEditting: React.Dispatch<React.SetStateAction<boolean>>;
+//   currentGrid: number | null;
+//   setCurrentGrid: React.Dispatch<React.SetStateAction<number | null>>;
+//   id: number;
 // }
 
 function Grid() {
@@ -12,18 +13,11 @@ function Grid() {
 
   // Local State
   const [note, setNote] = React.useState("");
-  const [editGrid, setEditGrid] = React.useState<boolean>(false);
+  const [editGrid, setEditGrid] = React.useState(false);
 
   // Makes sure grids are not displaying input when global edit is off
   if (!isEditting) {
     if (editGrid) setEditGrid(false);
-  }
-
-  function handleKeys(key: string) {
-    if (key === "Enter" || key === "Escape") {
-      setEditGrid(false);
-      setIsEditting(false);
-    }
   }
 
   function handleEdit() {
@@ -40,14 +34,22 @@ function Grid() {
     }
   }
 
+  // function handleKey(e: React.KeyboardEvent<HTMLInputElement>) {
+  //   if (e.key == "Enter") {
+  //     e.stopPropagation();
+  //     setEditGrid(false);
+  //   }
+  // }
+
   return (
     <li onClick={handleEdit}>
       {editGrid ? (
         <input
+          name="input"
           type="text"
           value={note}
           onChange={(e) => setNote(e.target.value)}
-          onKeyDown={(e) => handleKeys(e.key)}
+          // onKeyDown={(e) => handleKey(e)}
           autoFocus
         />
       ) : (

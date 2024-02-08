@@ -18,9 +18,17 @@ function NoteProvider({ children }: NoteProviderProps) {
   // Editting state is global to allow user to only edit one thing at a time
   const [isEditting, setIsEditting] = React.useState(false);
 
-  React.useEffect(function () {
-    // Code entered here to handle side effects
-  }, []);
+  // Enter and escape keys disable the editing state
+  React.useEffect(
+    function () {
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Enter" || e.key === "Escape") {
+          setIsEditting(false);
+        }
+      });
+    },
+    [setIsEditting]
+  );
 
   const value = {
     isEditting,
