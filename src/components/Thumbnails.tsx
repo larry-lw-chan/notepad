@@ -1,13 +1,14 @@
-import React from "react";
 import styles from "./Thumbnails.module.css";
-import { IPage } from "../Interface";
+import useGlobalContext from "../context/GlobalContext";
 
-interface ThumbnailsProp {
-  pages: IPage[];
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-}
+// interface ThumbnailsProp {
+//   pages: IPage[];
+//   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+// }
 
-function Thumbnails({ pages, setCurrentPage }: ThumbnailsProp) {
+function Thumbnails() {
+  const { pages, setCurrentPage } = useGlobalContext();
+
   function handleClick(i: number) {
     setCurrentPage(i);
   }

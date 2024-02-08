@@ -10,13 +10,12 @@ interface PageProp {
 }
 
 function Page({ page, isHidden }: PageProp) {
-  console.log(isHidden);
   return (
     <main className={`${styles.page} ${isHidden && styles.hide}`}>
       <div className={styles.sidebar}></div>
       <div>
         <Title text={page.title} />
-        <ContentList content={page.content} />
+        <ContentList page={page} />
       </div>
       <div className={styles.bottom}></div>
     </main>

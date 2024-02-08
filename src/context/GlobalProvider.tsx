@@ -1,8 +1,6 @@
-// Need to make editing state global
-// to the entire app so user can click
-// anywhere to exit
-
 import React from "react";
+import { initialPages } from "../seed/seed";
+import { IPage } from "../Interface";
 
 interface NoteProviderProps {
   children: React.ReactNode;
@@ -10,6 +8,10 @@ interface NoteProviderProps {
 interface NoteContextType {
   isEditting: boolean;
   setIsEditting: React.Dispatch<React.SetStateAction<boolean>>;
+  pages: IPage[];
+  setPages: React.Dispatch<React.SetStateAction<IPage[]>>;
+  currentPage: number;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const GlobalContext = React.createContext<NoteContextType>(
@@ -17,8 +19,12 @@ const GlobalContext = React.createContext<NoteContextType>(
 );
 
 function GlobalProvider({ children }: NoteProviderProps) {
-  // Editting state is global to allow user to only edit one thing at a time
+  // Global - Editting state allow user to only edit one thing at a time
   const [isEditting, setIsEditting] = React.useState(false);
+
+  // Global -
+  const [pages, setPages] = React.useState(initialPages);
+  const [currentPage, setCurrentPage] = React.useState(0);
 
   // Enter and escape keys disable the editing state
   React.useEffect(
@@ -35,6 +41,10 @@ function GlobalProvider({ children }: NoteProviderProps) {
   const value = {
     isEditting,
     setIsEditting,
+    pages,
+    setPages,
+    currentPage,
+    setCurrentPage,
   };
 
   return (
