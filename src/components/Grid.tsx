@@ -1,22 +1,27 @@
 import React from "react";
+import useNoteContext from "../context/NoteContext";
 
-// interface GridProps {
-//   edit: boolean;
-//   setEdit: React.Dispatch<React.SetStateAction<boolean>>;
+// interface GridProp {
+//   isEditting: boolean;
+//   setIsEditting: React.Dispatch<React.SetStateAction<boolean>>;
 // }
 
-interface GridProp {
-  isEditting: boolean;
-  setIsEditting: React.Dispatch<React.SetStateAction<boolean>>;
-}
+function Grid() {
+  // Global State
+  const { isEditting, setIsEditting } = useNoteContext();
 
-function Grid({ isEditting, setIsEditting }: GridProp) {
+  // Local State
   const [note, setNote] = React.useState("");
-  const [edit, setEdit] = React.useState<boolean>(false);
+  const [editGrid, setEditGrid] = React.useState<boolean>(false);
+
+  // Makes sure grids are not displaying input when global edit is off
+  if (!isEditting) {
+    if (editGrid) setEditGrid(false);
+  }
 
   function handleKeys(key: string) {
     if (key === "Enter" || key === "Escape") {
-      setEdit(false);
+      setEditGrid(false);
       setIsEditting(false);
     }
   }
@@ -24,20 +29,20 @@ function Grid({ isEditting, setIsEditting }: GridProp) {
   function handleEdit() {
     // If not editing, allow user to edit and lock other grid from editing
     if (!isEditting) {
-      setEdit(true);
+      setEditGrid(true);
       setIsEditting(true);
     }
 
     // If editing, clicking will close current grid and unlock edit lock
     if (isEditting) {
-      setEdit(false);
+      setEditGrid(false);
       setIsEditting(false);
     }
   }
 
   return (
     <li onClick={handleEdit}>
-      {edit ? (
+      {editGrid ? (
         <input
           type="text"
           value={note}

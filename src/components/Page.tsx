@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Page.module.css";
-import Header from "./Header";
+import Title from "./Title";
 import GridList from "./GridList";
 
 function Page() {
@@ -8,9 +8,10 @@ function Page() {
     <div className={styles.page}>
       <div className={styles.sidebar}></div>
       <main>
-        <Header />
+        <Title />
         <GridList />
       </main>
+      <div className={styles.bottom}></div>
     </div>
   );
 }

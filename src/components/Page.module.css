@@ -1,15 +1,18 @@
+.sidebar {
+  left: 7.5%;
+  height: 100%;
+  border-right: 1px solid rgb(224, 118, 118);
+  position: absolute;
+}
+
 .page {
   max-width: 750px;
-  height: 750px;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
   margin: 0 auto;
   background-color: white;
   position: relative;
 }
 
-.sidebar {
-  left: 7.5%;
-  height: 100%;
-  border-right: 1px solid rgb(224, 118, 118);
-  position: absolute;
+.bottom {
+  height: 2rem;
 }
