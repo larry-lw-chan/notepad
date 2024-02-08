@@ -1,45 +1,45 @@
 import React from "react";
 import useNoteContext from "../context/NoteContext";
+import { NUM_OF_GRID } from "./GridList";
 
-// interface GridProp {
-//   currentGrid: number | null;
-//   setCurrentGrid: React.Dispatch<React.SetStateAction<number | null>>;
-//   id: number;
-// }
+interface GridProp {
+  currentGrid: number | null;
+  setCurrentGrid: React.Dispatch<React.SetStateAction<number | null>>;
+  id: number;
+}
 
-function Grid() {
+function Grid({ currentGrid, setCurrentGrid, id }: GridProp) {
   // Global State
   const { isEditting, setIsEditting } = useNoteContext();
 
   // Local State
   const [note, setNote] = React.useState("");
-  const [editGrid, setEditGrid] = React.useState(false);
 
-  // Makes sure grids are not displaying input when global edit is off
-  if (!isEditting) {
-    if (editGrid) setEditGrid(false);
-  }
+  // Derived State
+  const editGrid = isEditting && currentGrid === id ? true : false;
 
   function handleEdit() {
     // If not editing, allow user to edit and lock other grid from editing
     if (!isEditting) {
-      setEditGrid(true);
+      setCurrentGrid(id);
       setIsEditting(true);
     }
 
     // If editing, clicking will close current grid and unlock edit lock
     if (isEditting) {
-      setEditGrid(false);
+      setCurrentGrid(null);
       setIsEditting(false);
     }
   }
 
-  // function handleKey(e: React.KeyboardEvent<HTMLInputElement>) {
-  //   if (e.key == "Enter") {
-  //     e.stopPropagation();
-  //     setEditGrid(false);
-  //   }
-  // }
+  function handleKey(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key == "Enter") {
+      e.stopPropagation();
+      if (id < NUM_OF_GRID - 1) {
+        setCurrentGrid(id + 1);
+      }
+    }
+  }
 
   return (
     <li onClick={handleEdit}>
@@ -49,7 +49,7 @@ function Grid() {
           type="text"
           value={note}
           onChange={(e) => setNote(e.target.value)}
-          // onKeyDown={(e) => handleKey(e)}
+          onKeyDown={(e) => handleKey(e)}
           autoFocus
         />
       ) : (
