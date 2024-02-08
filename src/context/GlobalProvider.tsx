@@ -12,9 +12,11 @@ interface NoteContextType {
   setIsEditting: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const NoteContext = React.createContext<NoteContextType>({} as NoteContextType);
+const GlobalContext = React.createContext<NoteContextType>(
+  {} as NoteContextType
+);
 
-function NoteProvider({ children }: NoteProviderProps) {
+function GlobalProvider({ children }: NoteProviderProps) {
   // Editting state is global to allow user to only edit one thing at a time
   const [isEditting, setIsEditting] = React.useState(false);
 
@@ -35,7 +37,9 @@ function NoteProvider({ children }: NoteProviderProps) {
     setIsEditting,
   };
 
-  return <NoteContext.Provider value={value}>{children}</NoteContext.Provider>;
+  return (
+    <GlobalContext.Provider value={value}>{children}</GlobalContext.Provider>
+  );
 }
 
-export { NoteProvider, NoteContext };
+export { GlobalProvider, GlobalContext };

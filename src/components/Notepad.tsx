@@ -8,7 +8,7 @@ import { IPage } from "../Interface";
 const initial: IPage[] = [
   {
     title: "Click to Change Title",
-    content: [],
+    content: ["click to edit", "Arrow keys all work"],
   },
   {
     title: "Click to Change Title 2",
@@ -22,13 +22,20 @@ function Notepad() {
   const [currentPage, setCurrentPage] = React.useState(0);
 
   // Derived State
-  const page = pages.filter((page, index) => {
-    if (index === currentPage) return page;
-  })[0];
+  // const page = pages.filter((page, index) => {
+  //   if (index === currentPage) return page;
+  // })[0];
 
   return (
     <div className={styles.notepad}>
-      <Page page={page} key={currentPage} />
+      {pages.map((page, index) => {
+        if (currentPage === index) {
+          return <Page page={page} key={index} isHidden={false} />;
+        } else {
+          return <Page page={page} key={index} isHidden={true} />;
+        }
+      })}
+
       <Thumbnails pages={pages} setCurrentPage={setCurrentPage} />
     </div>
   );

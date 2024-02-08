@@ -1,19 +1,20 @@
 import React from "react";
-import useNoteContext from "../context/NoteContext";
-import { NUM_OF_GRID } from "./GridList";
+import useGlobalContext from "../context/GlobalContext";
+import { NUM_OF_GRID } from "./ContentList";
 
-interface GridProp {
+interface ContentProp {
   currentGrid: number | null;
   setCurrentGrid: React.Dispatch<React.SetStateAction<number | null>>;
+  content: string;
   id: number;
 }
 
-function Grid({ currentGrid, setCurrentGrid, id }: GridProp) {
+function Content({ content, currentGrid, setCurrentGrid, id }: ContentProp) {
   // Global State
-  const { isEditting, setIsEditting } = useNoteContext();
+  const { isEditting, setIsEditting } = useGlobalContext();
 
   // Local State
-  const [note, setNote] = React.useState("");
+  const [note, setNote] = React.useState(content);
 
   // Derived State
   const editGrid = isEditting && currentGrid === id ? true : false;
@@ -66,4 +67,4 @@ function Grid({ currentGrid, setCurrentGrid, id }: GridProp) {
   );
 }
 
-export default Grid;
+export default Content;

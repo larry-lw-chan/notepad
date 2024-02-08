@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Title.module.css";
-import useNoteContext from "../context/NoteContext";
+import useGlobalContext from "../context/GlobalContext";
 
 interface TitleProp {
   text: string;
@@ -8,7 +8,7 @@ interface TitleProp {
 
 function Title({ text }: TitleProp) {
   // Global State
-  const { isEditting, setIsEditting } = useNoteContext();
+  const { isEditting, setIsEditting } = useGlobalContext();
   // Local State
   const [title, setTitle] = React.useState(text);
   const [editTitle, setEditTitle] = React.useState(false);

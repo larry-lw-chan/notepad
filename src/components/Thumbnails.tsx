@@ -8,6 +8,10 @@ interface ThumbnailsProp {
 }
 
 function Thumbnails({ pages, setCurrentPage }: ThumbnailsProp) {
+  function handleClick(i: number) {
+    setCurrentPage(i);
+  }
+
   return (
     <nav className={styles.thumbnails}>
       {pages.map((page, i) => {
@@ -15,7 +19,7 @@ function Thumbnails({ pages, setCurrentPage }: ThumbnailsProp) {
           <div
             className={styles.thumbnail}
             key={i}
-            onClick={() => setCurrentPage(i)}
+            onClick={() => handleClick(i)}
           >
             {page.title}
           </div>
