@@ -4,13 +4,23 @@ import { IPage } from "../Interface";
 
 interface ThumbnailsProp {
   pages: IPage[];
-  setCurrentPages: React.Dispatch<React.SetStateAction<number>>;
+  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
 }
 
 function Thumbnails({ pages, setCurrentPage }: ThumbnailsProp) {
   return (
     <nav className={styles.thumbnails}>
-      <h2>Here's the thumbnails</h2>
+      {pages.map((page, i) => {
+        return (
+          <div
+            className={styles.thumbnail}
+            key={i}
+            onClick={() => setCurrentPage(i)}
+          >
+            {page.title}
+          </div>
+        );
+      })}
     </nav>
   );
 }

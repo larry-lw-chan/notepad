@@ -2,11 +2,15 @@ import React from "react";
 import styles from "./Title.module.css";
 import useNoteContext from "../context/NoteContext";
 
-function Title() {
+interface TitleProp {
+  text: string;
+}
+
+function Title({ text }: TitleProp) {
   // Global State
   const { isEditting, setIsEditting } = useNoteContext();
   // Local State
-  const [title, setTitle] = React.useState("Click to change title");
+  const [title, setTitle] = React.useState(text);
   const [editTitle, setEditTitle] = React.useState(false);
   const headerRef = React.useRef<HTMLElement>(null);
 

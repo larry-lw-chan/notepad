@@ -1,9 +1,29 @@
 .thumbnails {
   width: 100%;
-  height: 100px;
+  height: 5rem;
   background: var(--css-palette-three);
   position: fixed;
   bottom: 0;
   color: white;
   border-top: 1px solid rgba(75, 75, 75, 1) 50%;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  padding: 1rem;
+}
+
+.thumbnail {
+  background-color: white;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.2);
+  color: grey;
+  font-size: 1rem;
+  width: 5rem;
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.thumbnail:hover {
+  background-color: var(--light-blue);
+  box-shadow: 0 3px 6px rgba(151, 64, 64, 0.2);
+  color: white;
 }

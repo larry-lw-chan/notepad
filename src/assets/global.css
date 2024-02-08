@@ -8,6 +8,7 @@
 :root {
   --primary-blue: hsl(240, 57%, 65%);
   --light-blue: hsl(240, 57%, 80%);
+  --lightest-blue: hsl(240, 57%, 90%);
 
   --css-palette-one: #ececec;
   --css-palette-two: #9fd3c7;
@@ -19,4 +20,5 @@ body {
   background-color: var(--css-palette-two);
   font-family: "Indie Flower", cursive;
   padding-top: 1rem;
+  box-sizing: border-box;
 }
