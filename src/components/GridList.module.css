@@ -7,6 +7,12 @@ ul.gridlist li {
   border-top: 1px solid var(--primary-blue);
   border-bottom: 1px solid var(--primary-blue);
   margin-top: -1px;
-  height: 1.12rem;
+  height: 1.2rem;
   padding: 1px 0 0 8.5%;
+}
+
+ul.gridlist li input {
+  width: 97.5%;
+  border: none;
+  background-color: blanchedalmond;
 }
