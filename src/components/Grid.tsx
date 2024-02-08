@@ -33,11 +33,18 @@ function Grid({ currentGrid, setCurrentGrid, id }: GridProp) {
   }
 
   function handleKey(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key == "Enter") {
-      e.stopPropagation();
-      if (id < NUM_OF_GRID - 1) {
-        setCurrentGrid(id + 1);
-      }
+    e.stopPropagation();
+    switch (e.key) {
+      case "Enter":
+      case "ArrowDown":
+        if (id < NUM_OF_GRID - 1) setCurrentGrid(id + 1);
+        break;
+      case "ArrowUp":
+        if (id > 0) setCurrentGrid(id - 1);
+        break;
+      case "Escape":
+        setCurrentGrid(null);
+        break;
     }
   }
 
