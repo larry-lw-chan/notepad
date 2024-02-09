@@ -19,6 +19,10 @@ const GlobalContext = React.createContext<NoteContextType>(
 );
 
 function GlobalProvider({ children }: NoteProviderProps) {
+  // Get Parsed Seed Data
+  const pagesData = getPages(initialPages);
+  const contentsData = getContents(initialPages);
+
   // Global - Editting state allow user to only edit one thing at a time
   const [isEditting, setIsEditting] = React.useState(false);
 
@@ -53,3 +57,49 @@ function GlobalProvider({ children }: NoteProviderProps) {
 }
 
 export { GlobalProvider, GlobalContext };
+
+interface pageKey {
+  [key: string]: { id: string; title: string; content: string[] };
+}
+
+function getPages(dataList: IPage[]) {
+  const allIds: string[] = [];
+  const byIds: pageKey = {};
+
+  dataList.forEach((data, i) => {
+    allIds.push(`page${i}`);
+    byIds[`page${i}`] = {
+      id: `page${i}`,
+      title: data.title,
+      content: data.content.map((_, i) => `content${i}`),
+    };
+  });
+
+  return { byIds, allIds };
+}
+
+interface getContentbyId {
+  [key: string]: {
+    id: string;
+    pageId: string;
+    content: string;
+  };
+}
+
+function getContents(dataList: IPage[]) {
+  const allIds: string[] = [];
+  const byIds: getContentbyId = {};
+
+  dataList.forEach((page, pIdx) => {
+    page.content.forEach((con, cIdx) => {
+      allIds.push(`content${cIdx}`);
+      byIds[`content${cIdx}`] = {
+        id: `content${cIdx}`,
+        pageId: `page${pIdx}`,
+        content: con,
+      };
+    });
+  });
+
+  return { allIds, byIds };
+}
