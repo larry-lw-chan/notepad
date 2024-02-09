@@ -9,20 +9,20 @@ import useGlobalContext from "../context/GlobalContext";
 function Thumbnails() {
   const { pages, setCurrentPage } = useGlobalContext();
 
-  function handleClick(i: number) {
-    setCurrentPage(i);
+  function handleClick(pageId: string) {
+    setCurrentPage(pageId);
   }
 
   return (
     <nav className={styles.thumbnails}>
-      {pages.map((page, i) => {
+      {pages.allIds.map((pageId) => {
         return (
           <div
             className={styles.thumbnail}
-            key={i}
-            onClick={() => handleClick(i)}
+            key={pageId}
+            onClick={() => handleClick(pageId)}
           >
-            {page.title}
+            {pages.byIds[pageId].title}
           </div>
         );
       })}

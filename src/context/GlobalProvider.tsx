@@ -5,13 +5,38 @@ import { IPage } from "../Interface";
 interface NoteProviderProps {
   children: React.ReactNode;
 }
+
+interface PagebyId {
+  [key: string]: { id: string; title: string; content: string[] };
+}
+
+interface ContentbyId {
+  [key: string]: {
+    id: string;
+    pageId: string;
+    content: string;
+  };
+}
+
+interface PagesState {
+  allIds: string[];
+  byIds: PagebyId;
+}
+
+interface ContentsState {
+  allIds: string[];
+  byIds: ContentbyId;
+}
+
 interface NoteContextType {
   isEditting: boolean;
   setIsEditting: React.Dispatch<React.SetStateAction<boolean>>;
-  pages: IPage[];
-  setPages: React.Dispatch<React.SetStateAction<IPage[]>>;
+  pages: PagesState;
+  setPages: React.Dispatch<React.SetStateAction<PagesState>>;
+  contents: ContentsState;
+  setContents: React.Dispatch<React.SetStateAction<ContentsState>>;
   currentPage: number;
-  setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+  setCurrentPage: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const GlobalContext = React.createContext<NoteContextType>(
@@ -27,8 +52,9 @@ function GlobalProvider({ children }: NoteProviderProps) {
   const [isEditting, setIsEditting] = React.useState(false);
 
   // Global -
-  const [pages, setPages] = React.useState(initialPages);
-  const [currentPage, setCurrentPage] = React.useState(0);
+  const [pages, setPages] = React.useState(pagesData);
+  const [contents, setContents] = React.useState(contentsData);
+  const [currentPage, setCurrentPage] = React.useState(pagesData.allIds[0]);
 
   // Enter and escape keys disable the editing state
   React.useEffect(
@@ -47,6 +73,8 @@ function GlobalProvider({ children }: NoteProviderProps) {
     setIsEditting,
     pages,
     setPages,
+    contents,
+    setContents,
     currentPage,
     setCurrentPage,
   };
@@ -58,13 +86,9 @@ function GlobalProvider({ children }: NoteProviderProps) {
 
 export { GlobalProvider, GlobalContext };
 
-interface pageKey {
-  [key: string]: { id: string; title: string; content: string[] };
-}
-
 function getPages(dataList: IPage[]) {
   const allIds: string[] = [];
-  const byIds: pageKey = {};
+  const byIds: PagebyId = {};
 
   dataList.forEach((data, i) => {
     allIds.push(`page${i}`);
@@ -78,17 +102,9 @@ function getPages(dataList: IPage[]) {
   return { byIds, allIds };
 }
 
-interface getContentbyId {
-  [key: string]: {
-    id: string;
-    pageId: string;
-    content: string;
-  };
-}
-
 function getContents(dataList: IPage[]) {
   const allIds: string[] = [];
-  const byIds: getContentbyId = {};
+  const byIds: ContentbyId = {};
 
   dataList.forEach((page, pIdx) => {
     page.content.forEach((con, cIdx) => {
