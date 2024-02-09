@@ -14,7 +14,7 @@ function Page({ page, isHidden }: PageProp) {
     <main className={`${styles.page} ${isHidden && styles.hide}`}>
       <div className={styles.sidebar}></div>
       <div>
-        <Title text={page.title} />
+        <Title page={page} />
         <ContentList page={page} />
       </div>
       <div className={styles.bottom}></div>

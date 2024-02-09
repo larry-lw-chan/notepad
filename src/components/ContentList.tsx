@@ -1,36 +1,29 @@
 import React from "react";
 import styles from "./GridList.module.css";
 import Content from "./Content";
+import useGlobalContext from "../context/GlobalContext";
 import { IPage } from "../Interface";
 
 interface ContentListProps {
   page: IPage;
 }
 
-export const NUM_OF_GRID = 32;
-
-function generateContent(content: string[]) {
-  const padding = Array.from(
-    { length: NUM_OF_GRID - content.length },
-    () => ""
-  );
-  return [...content, ...padding];
-}
-
 function ContentList({ page }: ContentListProps) {
-  const contentList = generateContent(page.content);
-  const [currentGrid, setCurrentGrid] = React.useState<number | null>(null);
+  // Global State
+  const { contents } = useGlobalContext();
+  // Local State
+  const [currentGrid, setCurrentGrid] = React.useState<string | null>(null);
 
   return (
     <ul className={styles.gridlist}>
-      {contentList.map((content, i) => {
+      {page.content.map((id) => {
         return (
           <Content
-            content={content}
+            content={contents.byIds[id]}
             currentGrid={currentGrid}
             setCurrentGrid={setCurrentGrid}
-            id={i}
-            key={i}
+            id={id}
+            key={id}
           />
         );
       })}

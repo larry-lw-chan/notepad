@@ -1,31 +1,15 @@
 import React from "react";
 import { initialPages } from "../seed/seed";
-import { IPage } from "../Interface";
+import {
+  IPage,
+  PagebyId,
+  ContentbyId,
+  PagesState,
+  ContentsState,
+} from "../Interface";
 
 interface NoteProviderProps {
   children: React.ReactNode;
-}
-
-interface PagebyId {
-  [key: string]: { id: string; title: string; content: string[] };
-}
-
-interface ContentbyId {
-  [key: string]: {
-    id: string;
-    pageId: string;
-    content: string;
-  };
-}
-
-interface PagesState {
-  allIds: string[];
-  byIds: PagebyId;
-}
-
-interface ContentsState {
-  allIds: string[];
-  byIds: ContentbyId;
 }
 
 interface NoteContextType {
@@ -35,7 +19,7 @@ interface NoteContextType {
   setPages: React.Dispatch<React.SetStateAction<PagesState>>;
   contents: ContentsState;
   setContents: React.Dispatch<React.SetStateAction<ContentsState>>;
-  currentPage: number;
+  currentPage: string;
   setCurrentPage: React.Dispatch<React.SetStateAction<string>>;
 }
 
@@ -84,19 +68,32 @@ function GlobalProvider({ children }: NoteProviderProps) {
   );
 }
 
-export { GlobalProvider, GlobalContext };
+export { GlobalProvider, GlobalContext, NUM_OF_GRID };
+
+const NUM_OF_GRID = 32;
 
 function getPages(dataList: IPage[]) {
   const allIds: string[] = [];
   const byIds: PagebyId = {};
 
+  let cIdx = 0;
   dataList.forEach((data, i) => {
+    let cLen = 0;
     allIds.push(`page${i}`);
     byIds[`page${i}`] = {
       id: `page${i}`,
       title: data.title,
-      content: data.content.map((_, i) => `content${i}`),
+      content: data.content.map((_, i) => {
+        cIdx++;
+        cLen++;
+        return `content${i}`;
+      }),
     };
+
+    for (let j = cLen; j < NUM_OF_GRID; j++) {
+      byIds[`page${i}`].content.push(`content${cIdx}`);
+      cIdx++;
+    }
   });
 
   return { byIds, allIds };
@@ -106,16 +103,31 @@ function getContents(dataList: IPage[]) {
   const allIds: string[] = [];
   const byIds: ContentbyId = {};
 
+  let cIdx = 0;
   dataList.forEach((page, pIdx) => {
-    page.content.forEach((con, cIdx) => {
+    let cLen = 0;
+    page.content.forEach((con) => {
       allIds.push(`content${cIdx}`);
       byIds[`content${cIdx}`] = {
         id: `content${cIdx}`,
         pageId: `page${pIdx}`,
         content: con,
       };
+      cIdx++;
+      cLen++;
     });
+    // Padding allIds and byIds here
+    for (let i = cLen; i < NUM_OF_GRID; i++) {
+      allIds.push(`content${cIdx}`);
+      byIds[`content${cIdx}`] = {
+        id: `content${cIdx}`,
+        pageId: `page${pIdx}`,
+        content: "",
+      };
+      cIdx++;
+    }
   });
-
+  // const content = { allIds, byIds };
+  // console.log(content);
   return { allIds, byIds };
 }

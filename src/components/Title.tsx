@@ -1,12 +1,16 @@
 import React from "react";
 import styles from "./Title.module.css";
 import useGlobalContext from "../context/GlobalContext";
+import { IPage } from "../Interface";
 
 interface TitleProp {
-  text: string;
+  page: IPage;
 }
 
-function Title({ text }: TitleProp) {
+function Title({ page }: TitleProp) {
+  // temp hack
+  const text = page.title;
+
   // Global State
   const { isEditting, setIsEditting } = useGlobalContext();
   // Local State
