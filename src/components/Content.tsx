@@ -38,15 +38,18 @@ function Content({ content, currentGrid, setCurrentGrid, id }: ContentProp) {
   // Handles updating state based on note changes
   function handleKey(e: React.KeyboardEvent<HTMLInputElement>) {
     e.stopPropagation();
-    const id = Number(content.id.match(/\d+/)![0]);
+    const pageId = Number(content.pageId.match(/\d+/)![0]);
+    const contentId = Number(content.id.match(/\d+/)![0]);
+    const position = contentId - NUM_OF_GRID * pageId;
     switch (e.key) {
       case "Enter":
       case "ArrowDown": {
-        if (id < NUM_OF_GRID - 1) setCurrentGrid(`content${id + 1}`);
+        if (position < NUM_OF_GRID - 1)
+          setCurrentGrid(`content${contentId + 1}`);
         break;
       }
       case "ArrowUp": {
-        if (id > 0) setCurrentGrid(`content${id - 1}`);
+        if (position > 0) setCurrentGrid(`content${contentId - 1}`);
         break;
       }
       case "Escape":

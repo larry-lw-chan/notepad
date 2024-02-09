@@ -10,6 +10,13 @@
   justify-content: center;
   gap: 1rem;
   padding: 1rem;
+  transition: 0.4s;
+  box-shadow: -3px -3px rgba(0, 0, 0, 0.2);
+}
+
+.hide {
+  bottom: -6rem;
+  transition: 0.4s;
 }
 
 .thumbnail {

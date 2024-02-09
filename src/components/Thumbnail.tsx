@@ -9,12 +9,13 @@ interface ThumbnailProp {
 function Thumbnail({ page }: ThumbnailProp) {
   const { setCurrentPage } = useGlobalContext();
 
-  function handleClick(pageId: string) {
-    setCurrentPage(pageId);
+  function handleClick(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+    e.stopPropagation();
+    setCurrentPage(page.id);
   }
 
   return (
-    <div className={styles.thumbnail} onClick={() => handleClick(page.id)}>
+    <div className={styles.thumbnail} onClick={(e) => handleClick(e)}>
       {page.title}
     </div>
   );
