@@ -1,7 +1,7 @@
 import React from "react";
 import useGlobalContext from "../context/GlobalContext";
 import { IContent } from "../Interface";
-import { NUM_OF_GRID } from "../context/GlobalProvider";
+import { NUM_OF_GRID } from "../utils/dataParsing";
 
 interface ContentProp {
   content: IContent;
@@ -16,7 +16,7 @@ function Content({ content, currentGrid, setCurrentGrid, id }: ContentProp) {
   const { isEditting, setIsEditting } = useGlobalContext();
 
   // Local State
-  const [note, setNote] = React.useState(content.content);
+  // const [note, setNote] = React.useState(content.content);
 
   // Derived State
   const editGrid = isEditting && currentGrid === id ? true : false;
@@ -50,24 +50,21 @@ function Content({ content, currentGrid, setCurrentGrid, id }: ContentProp) {
         break;
       }
       case "Escape":
+        setIsEditting(false);
         setCurrentGrid(null);
         break;
     }
   }
 
-  // Handles updating state based on note changes
-  React.useEffect(() => {
-    function handleChange(newContent: string) {
-      const newContents = Object.assign(contents);
-      contents.allIds.forEach((id) => {
-        if (content.id === id) {
-          newContents.byIds[id].content = newContent;
-        }
-      });
-      setContents(newContents);
-    }
-    handleChange(note);
-  }, [note, content.id, contents, setContents]);
+  function handleChange(note: string) {
+    // Set local state for fast update
+    // setNote(note);
+
+    // Update entire content state now
+    const newContents = { ...contents };
+    newContents.byIds[content.id].content = note;
+    setContents(newContents);
+  }
 
   return (
     <li onClick={handleEdit}>
@@ -75,13 +72,13 @@ function Content({ content, currentGrid, setCurrentGrid, id }: ContentProp) {
         <input
           name="input"
           type="text"
-          value={note}
-          onChange={(e) => setNote(e.target.value)}
+          value={content.content}
+          onChange={(e) => handleChange(e.target.value)}
           onKeyDown={(e) => handleKey(e)}
           autoFocus
         />
       ) : (
-        note
+        content.content
       )}
     </li>
   );

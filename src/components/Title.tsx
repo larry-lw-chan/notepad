@@ -8,15 +8,11 @@ interface TitleProp {
 }
 
 function Title({ page }: TitleProp) {
-  // temp hack
-  const text = page.title;
-
   // Global State
-  const { isEditting, setIsEditting } = useGlobalContext();
+  const { pages, setPages, isEditting, setIsEditting } = useGlobalContext();
+
   // Local State
-  const [title, setTitle] = React.useState(text);
   const [editTitle, setEditTitle] = React.useState(false);
-  const headerRef = React.useRef<HTMLElement>(null);
 
   // Makes sure grids are not displaying input when global edit is off
   if (!isEditting) {
@@ -44,19 +40,26 @@ function Title({ page }: TitleProp) {
     }
   }
 
+  function handleChange(title: string) {
+    // Update entire content state now
+    const newPages = { ...pages };
+    newPages.byIds[page.id].title = title;
+    setPages(newPages);
+  }
+
   return (
-    <header className={styles.header} ref={headerRef}>
+    <header className={styles.header}>
       <h1 onClick={handleEdit}>
         {editTitle ? (
           <input
             type="text"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            value={page.title}
+            onChange={(e) => handleChange(e.target.value)}
             onKeyDown={(e) => handleKeys(e.key)}
             autoFocus
           />
         ) : (
-          title
+          page.title
         )}
       </h1>
     </header>

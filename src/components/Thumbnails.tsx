@@ -1,30 +1,14 @@
 import styles from "./Thumbnails.module.css";
 import useGlobalContext from "../context/GlobalContext";
-
-// interface ThumbnailsProp {
-//   pages: IPage[];
-//   setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
-// }
+import Thumbnail from "./Thumbnail";
 
 function Thumbnails() {
-  const { pages, setCurrentPage } = useGlobalContext();
-
-  function handleClick(pageId: string) {
-    setCurrentPage(pageId);
-  }
+  const { pages } = useGlobalContext();
 
   return (
     <nav className={styles.thumbnails}>
       {pages.allIds.map((pageId) => {
-        return (
-          <div
-            className={styles.thumbnail}
-            key={pageId}
-            onClick={() => handleClick(pageId)}
-          >
-            {pages.byIds[pageId].title}
-          </div>
-        );
+        return <Thumbnail key={pageId} page={pages.byIds[pageId]} />;
       })}
     </nav>
   );
