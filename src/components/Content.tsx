@@ -57,10 +57,6 @@ function Content({ content, currentGrid, setCurrentGrid, id }: ContentProp) {
   }
 
   function handleChange(note: string) {
-    // Set local state for fast update
-    // setNote(note);
-
-    // Update entire content state now
     const newContents = { ...contents };
     newContents.byIds[content.id].content = note;
     setContents(newContents);

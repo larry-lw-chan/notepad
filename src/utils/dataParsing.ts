@@ -2,10 +2,53 @@ import { initialPages } from "./seed";
 import { PagebyId, ContentbyId } from "../Interface";
 
 const NUM_OF_GRID = 32;
+
 // Todo - Empty Page and Content Generation based off default Grid
+function createEmptyPage(numOfPages: number) {
+  const allIds: string[] = [];
+  const byIds: PagebyId = {};
+
+  for (let pIdx = 0; pIdx < numOfPages; pIdx++) {
+    allIds.push(`page${pIdx}`);
+    byIds[`page${pIdx}`] = {
+      id: `page${pIdx}`,
+      title: "",
+      content: Array.from(
+        { length: NUM_OF_GRID },
+        (_, cIdx) => `content${NUM_OF_GRID * pIdx + cIdx}`
+      ),
+    };
+  }
+
+  return { allIds, byIds };
+}
+
+function createEmptyContent(numOfPages: number) {
+  const allIds: string[] = [];
+  const byIds: ContentbyId = {};
+
+  for (let pIdx = 0; pIdx < numOfPages; pIdx++) {
+    for (
+      let cIdx = NUM_OF_GRID * pIdx;
+      cIdx < NUM_OF_GRID * (pIdx + 1);
+      cIdx++
+    ) {
+      allIds.push(`content${cIdx}`);
+      byIds[`content${cIdx}`] = {
+        id: `content${cIdx}`,
+        pageId: `page${pIdx}`,
+        content: "",
+      };
+    }
+  }
+
+  return { allIds, byIds };
+}
 
 function getPages() {
   const dataList = initialPages;
+  console.log(createEmptyContent(2));
+
   const allIds: string[] = [];
   const byIds: PagebyId = {};
 
