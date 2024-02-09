@@ -3,7 +3,6 @@ import { PagebyId, ContentbyId } from "../Interface";
 
 const NUM_OF_GRID = 32;
 
-// Todo - Empty Page and Content Generation based off default Grid
 function createEmptyPage(numOfPages: number) {
   const allIds: string[] = [];
   const byIds: PagebyId = {};
@@ -46,65 +45,28 @@ function createEmptyContent(numOfPages: number) {
 }
 
 function getPages() {
-  const dataList = initialPages;
-  console.log(createEmptyContent(2));
-
-  const allIds: string[] = [];
-  const byIds: PagebyId = {};
-
-  let cIdx = 0;
-  dataList.forEach((data, i) => {
-    let cLen = 0;
-    allIds.push(`page${i}`);
-    byIds[`page${i}`] = {
-      id: `page${i}`,
-      title: data.title,
-      content: data.content.map((_, i) => {
-        cIdx++;
-        cLen++;
-        return `content${i}`;
-      }),
-    };
-
-    for (let j = cLen; j < NUM_OF_GRID; j++) {
-      byIds[`page${i}`].content.push(`content${cIdx}`);
-      cIdx++;
-    }
+  // Get empty padded pages
+  const pages = createEmptyPage(initialPages.length);
+  // Populate page with seed data
+  initialPages.forEach((page, i) => {
+    pages.byIds[`page${i}`].title = page.title;
   });
-
-  return { byIds, allIds };
+  // Return populated pages
+  return pages;
 }
 
 function getContents() {
-  const dataList = initialPages;
-  const allIds: string[] = [];
-  const byIds: ContentbyId = {};
-
-  let cIdx = 0;
-  dataList.forEach((page, pIdx) => {
-    let cLen = 0;
-    page.content.forEach((con) => {
-      allIds.push(`content${cIdx}`);
-      byIds[`content${cIdx}`] = {
-        id: `content${cIdx}`,
-        pageId: `page${pIdx}`,
-        content: con,
-      };
-      cIdx++;
-      cLen++;
+  // Get empty padded content
+  const contents = createEmptyContent(initialPages.length);
+  // Populate contents with seed data
+  initialPages.forEach((page, pIdx) => {
+    page.content.forEach((content, cIdx) => {
+      const cId = NUM_OF_GRID * pIdx + cIdx;
+      contents.byIds[`content${cId}`].content = content;
     });
-    // Padding allIds and byIds here
-    for (let i = cLen; i < NUM_OF_GRID; i++) {
-      allIds.push(`content${cIdx}`);
-      byIds[`content${cIdx}`] = {
-        id: `content${cIdx}`,
-        pageId: `page${pIdx}`,
-        content: "",
-      };
-      cIdx++;
-    }
   });
-  return { allIds, byIds };
+  // Return populated contents
+  return contents;
 }
 
 export { NUM_OF_GRID, getPages, getContents };
