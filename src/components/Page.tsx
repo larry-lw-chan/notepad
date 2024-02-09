@@ -1,4 +1,3 @@
-import React from "react";
 import styles from "./Page.module.css";
 import Title from "./Title";
 import ContentList from "./ContentList";

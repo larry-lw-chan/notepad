@@ -1,5 +1,3 @@
-import React from "react";
-
 import styles from "./Notepad.module.css";
 import Page from "./Page";
 import Thumbnails from "./Thumbnails";
