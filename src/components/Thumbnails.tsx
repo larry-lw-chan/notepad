@@ -9,25 +9,18 @@ function Thumbnails() {
   // Local State
   const [hide, setHide] = React.useState(true);
 
-  // Detect hover and show menu when mouse cursor over it
-  React.useEffect(() => {
-    const thumbNav = document.querySelector("#thumbnails")!;
-    thumbNav.addEventListener("mouseenter", (e) => {
-      e.stopPropagation();
-      setHide(!hide);
-    });
-
-    thumbNav.addEventListener("mouseleave", (e) => {
-      e.stopPropagation();
-      setHide(!hide);
-    });
-  }, [hide, setHide]);
+  function handleMouse(e: React.MouseEvent<HTMLElement, MouseEvent>) {
+    e.stopPropagation();
+    setHide(!hide);
+  }
 
   return (
     <nav
       id="thumbnails"
       className={`${styles.thumbnails} ${hide && styles.hide}`}
       onClick={() => setHide(!hide)}
+      onMouseEnter={(e) => handleMouse(e)}
+      onMouseLeave={(e) => handleMouse(e)}
     >
       {pages.allIds.map((pageId) => {
         return <Thumbnail key={pageId} page={pages.byIds[pageId]} />;
