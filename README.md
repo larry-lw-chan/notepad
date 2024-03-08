@@ -11,5 +11,6 @@ This is a React based SPA meant for jotting down notes
 - Add save document to server functionality
 - Add open document from server functionality
 
-You can find an early preview hosted on: 
+You can find an early preview hosted on:
+
 **[notepad.larrycancode.com](https://notepad.larrycancode.com)**
